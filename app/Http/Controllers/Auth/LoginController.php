@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -76,14 +77,14 @@ public function handleGoogleCallback()
 }
 
 // 3. Login tradicional por formulario
-public function authenticated(\Illuminate\Http\Request $request, \App\Models\User $user)
+public function authenticated(Request $request, $user)
 {
     $device = $request->header('User-Agent');
-    
-    // Guarda en la BD (Por eso necesitas la columna del Problema 1)
-    $user->sessions()->create([
-        'device' => $device
-    ]);
+
+    // Buscamos la sesión actual del navegador y le actualizamos el campo device
+    DB::table('sessions')
+        ->where('id', session()->getId())
+        ->update(['device' => $device]);
 
     // Guarda en la sesión del navegador
     session(['device' => $device]);

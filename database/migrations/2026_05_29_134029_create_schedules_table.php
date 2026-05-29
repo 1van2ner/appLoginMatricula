@@ -12,12 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->foreign('id_curso')->constrained('courses')->onDelete('cascade');
+            $table->id(); 
+            
+            // CAMBIA ESTO: Quitamos el 'unsigned' para que coincida exactamente con el id() de courses
+            $table->bigInteger('id_curso'); 
+            
+            $table->foreign('id_curso')
+                  ->references('id_curso')
+                  ->on('courses')
+                  ->onDelete('cascade');
+            
             $table->dateTime('weekday');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->String('num_salon');
+            $table->string('num_salon');
             $table->timestamps();
         });
     }

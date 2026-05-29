@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Students extends Model
 {
-    /** @use HasFactory<\Database\Factories\StudentsFactory> */
     use HasFactory;
 
-    // ¡AÑADE ESTO JUSTO AQUÍ!
-    protected $table = 'students'; // Nombre exacto de tu tabla en la base de datos
-    protected $primaryKey = 'id_alumno'; // Tu clave primaria personalizada
+    protected $table = 'students';
+    protected $primaryKey = 'id_alumno'; // Especificamos tu clave primaria
 
     protected $fillable = [
         'nombre',
@@ -25,4 +23,3 @@ class Students extends Model
         'estado_matricula'
     ];
 }
-
