@@ -36,7 +36,7 @@ return new class extends Migration
             $table->integer('last_activity')->index();
             
             // AGREGA ESTA LÍNEA JUSTO AQUÍ:
-            $table->text('device')->nullable(); 
+            $table->text('device')->nullable();
         });
     }
     /**
