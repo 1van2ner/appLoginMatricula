@@ -12,18 +12,28 @@ class UpdateStudentsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
-
-    /**
+    
+        /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
+        $studentId = $this->route('student');
+    
         return [
-            //
+            'nombre'           => 'sometimes|string|max:255',
+            'apellidos'        => 'sometimes|string|max:255',
+            'fecha_nacimiento' => 'sometimes|date',
+            'dni'              => 'sometimes|string|max:20|unique:students,dni,' . $studentId . ',id_alumno',
+            'direccion'        => 'nullable|string|max:255',
+            'telefono'         => 'nullable|string|max:20',
+            'email'            => 'sometimes|email|max:255|unique:students,email,' . $studentId . ',id_alumno',
+            
+            'estado_matricula' => 'sometimes|string|in:matriculado,inactivo',
         ];
     }
 }
