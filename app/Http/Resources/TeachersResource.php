@@ -14,6 +14,12 @@ class TeachersResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // Mapeamos los campos exactos de tu base de datos para la API
+        return [
+            'id_profesor' => $this->id_profesor,
+            'nombre' => $this->nombre,
+            'apellidos' => $this->apellidos,
+            'especialidad' => $this->especialidad,
+        ];
     }
 }
