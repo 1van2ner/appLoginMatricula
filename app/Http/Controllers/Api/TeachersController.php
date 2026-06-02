@@ -1,28 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Api; // <-- CORRIGE AQUÍ: Agrega "\Api" al final para que coincida con la carpeta real
+namespace App\Http\Controllers\Api; // <-- Namespace correcto que ya tenías
 
-use App\Models\Profesor;
+use App\Http\Controllers\Controller;
+use App\Models\Teacher; // <-- Cambiado a 'Teacher' para usar tu modelo corregido en inglés
 use Illuminate\Http\Request;
 
-class TeachersController extends Controller // <-- Asegúrate de que se mantenga exactamente así
+class TeachersController extends Controller
 {
-    // ... Todo el resto de tus métodos (index, store, etc.) se quedan exactamente igual
     public function index()
     {
-        $profesores = Profesor::all();
+        // Trae los datos usando tu modelo en inglés
+        $profesores = Teacher::all();
         return view('profesores.index', compact('profesores'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'id_profesor' => 'required|integer', // Tu clave primaria personalizada
             'nombre' => 'required|string|max:255',
             'apellidos' => 'required|string|max:255',
             'especialidad' => 'required|string|max:255',
         ]);
 
-        Profesor::create($request->all());
+        Teacher::create($request->all());
         return redirect()->route('profesores.index')->with('success', 'Profesor registrado con éxito.');
     }
 
@@ -34,7 +36,8 @@ class TeachersController extends Controller // <-- Asegúrate de que se mantenga
             'especialidad' => 'required|string|max:255',
         ]);
 
-        $profesor = Profesor::findOrFail($id);
+        // Busca usando tu modelo en inglés
+        $profesor = Teacher::findOrFail($id);
         $profesor->update($request->all());
 
         return redirect()->route('profesores.index')->with('success', 'Profesor actualizado con éxito.');
@@ -42,8 +45,10 @@ class TeachersController extends Controller // <-- Asegúrate de que se mantenga
 
     public function destroy($id)
     {
-        $profesor = Profesor::findOrFail($id);
+        // Busca y elimina usando tu modelo en inglés
+        $profesor = Teacher::findOrFail($id);
         $profesor->delete();
+        
         return redirect()->route('profesores.index')->with('success', 'Profesor eliminado correctamente.');
     }
 }

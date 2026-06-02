@@ -9,7 +9,8 @@ class Teacher extends Model
 {
     use HasFactory;
 
-    protected $table = 'profesors';
-    protected $primaryKey = 'id_profesor';
-    protected $fillable = ['nombre', 'apellidos', 'especialidad'];
+    protected $table = 'teachers'; 
+    protected $primaryKey = 'id_profesor'; 
+    protected $fillable = ['id_profesor', 'nombre', 'apellidos', 'especialidad'];
+    public $timestamps = false; 
 }
