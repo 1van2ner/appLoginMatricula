@@ -7,9 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
+    /** @use HasFactory<\Database\Factories\TeacherFactory> */
     use HasFactory;
 
-    protected $table = 'profesors';
-    protected $primaryKey = 'id_profesor';
-    protected $fillable = ['nombre', 'apellidos', 'especialidad'];
+    // Conexión exacta con tu migración en inglés
+    protected $table = 'teachers';
+    protected $primaryKey = 'teacher_id';
+    public $timestamps = false;
+
+    
+    protected $fillable = [
+        'first_name', 
+        'last_name', 
+        'specialty'
+    ];
 }

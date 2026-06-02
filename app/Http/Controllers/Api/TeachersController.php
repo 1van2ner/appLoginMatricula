@@ -1,49 +1,61 @@
 <?php
 
-namespace App\Http\Controllers\Api; // <-- CORRIGE AQUÍ: Agrega "\Api" al final para que coincida con la carpeta real
+namespace App\Http\Controllers\Api;
 
-use App\Models\Profesor;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Teacher; // 
+use App\Http\Requests\StoreTeachersRequest; 
+use App\Http\Resources\TeachersResource;   
 
-class TeachersController extends Controller // <-- Asegúrate de que se mantenga exactamente así
+class TeachersController extends Controller
 {
-    // ... Todo el resto de tus métodos (index, store, etc.) se quedan exactamente igual
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $profesores = Profesor::all();
-        return view('profesores.index', compact('profesores'));
+        return TeachersResource::collection(Teacher::all());
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreTeachersRequest $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
-            'especialidad' => 'required|string|max:255',
-        ]);
+        $teacher = Teacher::create($request->validated());
 
-        Profesor::create($request->all());
-        return redirect()->route('profesores.index')->with('success', 'Profesor registrado con éxito.');
+        return new TeachersResource($teacher);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellidos' => 'required|string|max:255',
-            'especialidad' => 'required|string|max:255',
-        ]);
+        $teacher = Teacher::findOrFail($id);
 
-        $profesor = Profesor::findOrFail($id);
-        $profesor->update($request->all());
-
-        return redirect()->route('profesores.index')->with('success', 'Profesor actualizado con éxito.');
+        return new TeachersResource($teacher);
     }
 
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreTeachersRequest $request, string $id)
     {
-        $profesor = Profesor::findOrFail($id);
-        $profesor->delete();
-        return redirect()->route('profesores.index')->with('success', 'Profesor eliminado correctamente.');
+        $teacher = Teacher::findOrFail($id);
+        $teacher->update($request->validated());
+
+        return new TeachersResource($teacher);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $teacher->delete();
+
+        return new TeachersResource($teacher);
     }
 }
