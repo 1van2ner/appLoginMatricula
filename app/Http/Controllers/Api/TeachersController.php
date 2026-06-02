@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api; // <-- CORRIGE AQUÍ: Agrega "\Api" al final para que coincida con la carpeta real
 
 use App\Models\Profesor;
 use Illuminate\Http\Request;
 
-class ProfesorController extends Controller
+class TeachersController extends Controller // <-- Asegúrate de que se mantenga exactamente así
 {
+    // ... Todo el resto de tus métodos (index, store, etc.) se quedan exactamente igual
     public function index()
     {
         $profesores = Profesor::all();
