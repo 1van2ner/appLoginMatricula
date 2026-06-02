@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Foundation\Http\FormRequest; // Se mantiene la importación original
 
 class UpdateTeachersRequest extends FormRequest
 {
@@ -12,18 +11,21 @@ class UpdateTeachersRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // <-- CORRECCIÓN: Cambiado de false a true para que Laravel permita editar
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            // Aquí validamos los 3 campos editables del profesor
+            'nombre' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'especialidad' => 'required|string|max:255',
         ];
     }
 }

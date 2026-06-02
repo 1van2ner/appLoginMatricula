@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teachers', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+       $table->integer('id_profesor')->primary(); // Tu clave primaria personalizada
+            $table->string('nombre', 255);
+            $table->string('apellidos', 255);
+            $table->string('especialidad', 255);
     }
 
     /**
