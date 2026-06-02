@@ -42,8 +42,7 @@ class Enrollments extends Model
      */
     public function student()
     {
-        // Nota: Cambia 'Students::class' por el nombre real de tu modelo de Alumnos
-        // El segundo parámetro es la FK de esta tabla, el tercero es la PK de la tabla Alumnos
+        
         return $this->belongsTo(Students::class, 'student_id', 'student_id');
     }
 
