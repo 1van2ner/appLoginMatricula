@@ -17,3 +17,4 @@ Route::get('/login/google/callback', [App\Http\Controllers\Auth\LoginController:
 Route::middleware(['auth'])->get('/dashboard', function(){
     return view('home');
 });
+
