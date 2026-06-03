@@ -12,20 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('schedules', function (Blueprint $table) {
+Schema::create('schedules', function (Blueprint $table) {
+            // Usamos la llave primaria autoincremental estándar de Laravel
             $table->id(); 
-            
-            // CAMBIA ESTO: Quitamos el 'unsigned' para que coincida exactamente con el id() de courses
-            $table->bigInteger('id_curso'); 
-            
-            $table->foreign('id_curso')
-                  ->references('id_curso')
-                  ->on('courses')
+
+            // Llave foránea limpia con la sintaxis moderna de Laravel
+            $table->foreignId('id_curso')
+                  ->constrained('courses', 'id_curso')
                   ->onDelete('cascade');
-            
+
             $table->dateTime('weekday');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->string('num_salon');
+            $table->string('num_salon', 10); // Incluye el límite de caracteres de Luis
+            $table->timestamps();
+        });
             $table->timestamps();
         });
     }

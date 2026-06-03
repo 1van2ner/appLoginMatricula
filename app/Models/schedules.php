@@ -11,7 +11,7 @@ class schedules extends Model
     use HasFactory;
 
     public function curso(){
-        return $this-> belogsto(course::class);
+        return $this-> hasMany(course::class);
     }
 
     protected $fillable = [
