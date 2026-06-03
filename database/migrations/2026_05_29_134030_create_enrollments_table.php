@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id('id_enrollment');
 
             
-            $table->unsignedBigInteger('id_students');
+            $table->unsignedBigInteger('id_alumno');
             $table->unsignedBigInteger('id_course');
             
             
@@ -37,8 +37,8 @@ return new class extends Migration
         
             
         
-            $table->foreign('id_students')
-                ->references('id_students') 
+            $table->foreign('id_alumno')
+                ->references('id_alumno') 
                 ->on('students')           
                 ->onDelete('cascade'); 
 

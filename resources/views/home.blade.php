@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -49,6 +50,9 @@
                             </thead>
                             <tbody>
                                 @forelse($students as $student)
+                                <pre>
+                                ID: {{ $student->id_alumno }}
+                                </pre>
                                     <tr>
                                         <td>{{ $student->id_alumno }}</td>
                                         <td class="fw-bold">{{ $student->dni }}</td>
