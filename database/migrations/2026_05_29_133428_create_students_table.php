@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             // Dejamos id() estándar de Laravel para evitar problemas de relación
-            $table->id('id_students'); 
+            $table->id('id_alumno'); 
             
             $table->string('nombre');
             $table->string('apellidos');
