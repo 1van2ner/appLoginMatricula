@@ -28,16 +28,11 @@ return new class extends Migration
         });
 
         Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-            
-            // AGREGA ESTA LÍNEA JUSTO AQUÍ:
-            $table->text('device')->nullable();
-        });
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->string('device');
+        $table->timestamps();
+    });
     }
     /**
      * Reverse the migrations.

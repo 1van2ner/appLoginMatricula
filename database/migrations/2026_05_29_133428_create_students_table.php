@@ -6,13 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id('id_student');
+            // Dejamos id() estándar de Laravel para evitar problemas de relación
+            $table->id(); 
             
             $table->string('nombre');
             $table->string('apellidos');
@@ -21,15 +19,16 @@ return new class extends Migration
             $table->string('direccion')->nullable();
             $table->string('telefono', 20)->nullable();
             $table->string('email')->unique();
-            $table->string('estado_matricula');
             
+            // Mantenemos tu excelente configuración por defecto
+            $table->string('estado_matricula')->default('matriculado'); 
+            
+            $table->timestamps();
+        });
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('students');
