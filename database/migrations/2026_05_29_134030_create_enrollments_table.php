@@ -15,15 +15,15 @@ return new class extends Migration
         Schema::create('enrollments', function (Blueprint $table) {
             
             
-            $table->id('enrollment_id');
+            $table->id('id_enrollment');
 
             
-            $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('id_student');
+            $table->unsignedBigInteger('id_course');
             
             
-            $table->unsignedBigInteger('teacher_id')->nullable();
-            $table->unsignedBigInteger('schedule_id')->nullable();
+            $table->unsignedBigInteger('id_teacher')->nullable();
+            $table->unsignedBigInteger('id_schedule')->nullable();
 
             
             $table->string('semester', 10);
@@ -37,23 +37,23 @@ return new class extends Migration
         
             
         
-            $table->foreign('student_id')
-                  ->references('student_id') 
+            $table->foreign('id_student')
+                  ->references('id_student') 
                   ->on('students')           
                   ->onDelete('cascade'); 
 
-            $table->foreign('course_id')
-                  ->references('course_id')   
+            $table->foreign('id_course')
+                  ->references('id_course')   
                   ->on('courses')            
                   ->onDelete('restrict'); 
 
-            $table->foreign('teacher_id')
-                  ->references('teacher_id')  
+            $table->foreign('id_teacher')
+                  ->references('id_teacher')  
                   ->on('teachers')           
                   ->onDelete('set null'); 
 
-            $table->foreign('schedule_id')
-                  ->references('schedule_id') 
+            $table->foreign('id_schedule')
+                  ->references('id_schedule') 
                   ->on('schedules')          
                   ->onDelete('set null');
         });
