@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             // Dejamos id() estándar de Laravel para evitar problemas de relación
-            $table->id(); 
+            $table->id('id_students'); 
             
             $table->string('nombre');
             $table->string('apellidos');
@@ -23,8 +23,6 @@ return new class extends Migration
             // Mantenemos tu excelente configuración por defecto
             $table->string('estado_matricula')->default('matriculado'); 
             
-            $table->timestamps();
-        });
             $table->timestamps();
         });
     }

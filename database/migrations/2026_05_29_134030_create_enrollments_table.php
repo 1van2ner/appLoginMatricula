@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id('id_enrollment');
 
             
-            $table->unsignedBigInteger('id_student');
+            $table->unsignedBigInteger('id_students');
             $table->unsignedBigInteger('id_course');
             
             
@@ -37,25 +37,25 @@ return new class extends Migration
         
             
         
-            $table->foreign('id_student')
-                  ->references('id_student') 
-                  ->on('students')           
-                  ->onDelete('cascade'); 
+            $table->foreign('id_students')
+                ->references('id_students') 
+                ->on('students')           
+                ->onDelete('cascade'); 
 
             $table->foreign('id_course')
-                  ->references('id_course')   
-                  ->on('courses')            
-                  ->onDelete('restrict'); 
+                ->references('id_course')   
+                ->on('courses')            
+                ->onDelete('restrict'); 
 
             $table->foreign('id_teacher')
-                  ->references('id_teacher')  
-                  ->on('teachers')           
-                  ->onDelete('set null'); 
+                ->references('id_teacher')  
+                ->on('teachers')           
+                ->onDelete('set null'); 
 
             $table->foreign('id_schedule')
-                  ->references('id_schedule') 
-                  ->on('schedules')          
-                  ->onDelete('set null');
+                ->references('id_schedule') 
+                ->on('schedules')          
+                ->onDelete('set null');
         });
     }
 
