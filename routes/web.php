@@ -18,7 +18,7 @@ Route::get('/login/google/callback', [App\Http\Controllers\Auth\LoginController:
 
 // Grupo protegido por autenticación para el Panel de Control
 Route::middleware(['auth'])->group(function () {
-    
+
     // Ambas URL (/home y /dashboard) ahora llaman al controlador para cargar los alumnos correctamente
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');

@@ -16,7 +16,7 @@ Schema::create('schedules', function (Blueprint $table) {
             // Usamos la llave primaria autoincremental estándar de Laravel
             $table->id(); 
 
-            // Llave foránea limpia con la sintaxis moderna de Laravel
+            // Llave foránea limpia enlazada a la tabla courses
             $table->foreignId('id_curso')
                   ->constrained('courses', 'id_curso')
                   ->onDelete('cascade');
@@ -24,7 +24,7 @@ Schema::create('schedules', function (Blueprint $table) {
             $table->dateTime('weekday');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->string('num_salon', 10); // Incluye el límite de caracteres de Luis
+            $table->string('num_salon', 10); // Límite de caracteres para el salón
             $table->timestamps();
         });
             $table->timestamps();
