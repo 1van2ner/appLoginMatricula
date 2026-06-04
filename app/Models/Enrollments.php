@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Students;
+use App\Models\Course;
+use App\Models\Teacher;
+use App\Models\schedules;
 
 class Enrollments extends Model
 {
@@ -11,12 +15,8 @@ class Enrollments extends Model
     use HasFactory;
 
     // 1. Nombre real de la tabla en la base de datos (Inglés y plural)
-    protected $table = 'enrollments'; 
-
-    
-    protected $primaryKey = 'enrollments_id';
-
-    
+protected $table = 'enrollments';
+    protected $primaryKey = 'id_enrollment';
     public $timestamps = false;
 
     
@@ -42,8 +42,7 @@ class Enrollments extends Model
      */
     public function student()
     {
-        
-        return $this->belongsTo(Students::class, 'student_id', 'student_id');
+        return $this->belongsTo(Students::class, 'id_alumno', 'id_alumno');
     }
 
     /**
@@ -51,7 +50,7 @@ class Enrollments extends Model
      */
     public function course()
     {
-        return $this->belongsTo(Courses::class, 'course_id', 'course_id');
+        return $this->belongsTo(Course::class, 'id_course', 'id_course');
     }
 
     /**
@@ -59,7 +58,7 @@ class Enrollments extends Model
      */
     public function teacher()
     {
-        return $this->belongsTo(Teachers::class, 'teacher_id', 'teacher_id');
+        return $this->belongsTo(Teacher::class, 'id_teacher', 'id_profesor');
     }
 
     /**
@@ -67,6 +66,6 @@ class Enrollments extends Model
      */
     public function schedule()
     {
-        return $this->belongsTo(Schedules::class, 'schedule_id', 'schedule_id');
+        return $this->belongsTo(schedules::class, 'id_schedule', 'id_schedule');
     }
 }

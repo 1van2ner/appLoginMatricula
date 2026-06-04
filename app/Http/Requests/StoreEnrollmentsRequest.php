@@ -22,14 +22,14 @@ class StoreEnrollmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id'       => 'required|exists:alumnos,id_alumno', 
-            'course_id'        => 'required|exists:cursos,id_curso',
-            'teacher_id'       => 'nullable|exists:profesores,id_profesor', 
-            'schedule_id'      => 'nullable|exists:horarios,id_horario',   
+            'id_alumno'        => 'required|exists:students,id_alumno',
+            'id_course'        => 'required|exists:courses,id_course',
+            'id_teacher'       => 'nullable|exists:teachers,id_profesor',
+            'id_schedule'      => 'nullable|exists:schedules,id_schedule',
             'semester'         => 'required|string|max:10',
             'enrollment_date'  => 'required|date',
-            'final_grade'      => 'nullable|numeric|between:0,20', 
-            'status'           => 'required|in:aprobado,reprobado,cursando' 
+            'final_grade'      => 'nullable|numeric|between:0,20',
+            'status'           => 'required|in:approved,failed,ongoing'
         ];
     }
 

@@ -22,12 +22,14 @@ class UpdateEnrollmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'teacher_id'       => 'sometimes|nullable|exists:profesores,id_profesor',
-            'schedule_id'      => 'sometimes|nullable|exists:horarios,id_horario',
+            'id_alumno'        => 'sometimes|required|exists:students,id_alumno',
+            'id_course'        => 'sometimes|required|exists:courses,id_course',
+            'id_teacher'       => 'sometimes|nullable|exists:teachers,id_profesor',
+            'id_schedule'      => 'sometimes|nullable|exists:schedules,id_schedule',
             'semester'         => 'sometimes|string|max:10',
             'enrollment_date'  => 'sometimes|date',
             'final_grade'      => 'sometimes|nullable|numeric|between:0,20',
-            'status'           => 'sometimes|in:aprobado,reprobado,cursando'
+            'status'           => 'sometimes|in:approved,failed,ongoing'
         ];
     }
 

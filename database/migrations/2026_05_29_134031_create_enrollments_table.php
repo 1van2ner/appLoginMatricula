@@ -48,7 +48,7 @@ return new class extends Migration
                 ->onDelete('restrict'); 
 
             $table->foreign('id_teacher')
-                ->references('id_teacher')  
+                ->references('id_profesor')  
                 ->on('teachers')           
                 ->onDelete('set null'); 
 

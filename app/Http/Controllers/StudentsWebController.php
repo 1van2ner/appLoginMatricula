@@ -56,4 +56,24 @@ class StudentsWebController extends Controller
 
         return redirect()->route('home')->with('status', '¡Datos del alumno actualizados correctamente!');
     }
+    public function index()
+    {
+    // Extrae todos los alumnos registrados en orden descendente
+    $students = \App\Models\Students::orderBy('id_alumno', 'desc')->get();
+    
+    // Retorna la vista enviándole la colección de datos
+    return view('admin.students', compact('students'));
+    }
+    
+    public function destroy(string $id)
+    {
+    // Buscamos al alumno por su ID primario
+    $student = \App\Models\Students::findOrFail($id);
+    
+    // Eliminamos el registro de la base de datos
+    $student->delete();
+
+    // Redireccionamos con un mensaje de alerta
+    return redirect()->route('students.index')->with('status', 'Alumno eliminado correctamente del sistema.');
+    }
 }
