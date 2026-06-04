@@ -24,7 +24,7 @@ class StoreEnrollmentsRequest extends FormRequest
         return [
             'id_alumno'        => 'required|exists:students,id_alumno',
             'id_course'        => 'required|exists:courses,id_course',
-            'id_teacher'       => 'nullable|exists:teachers,id_profesor',
+            'id_teacher'       => 'nullable|exists:teachers,id_teacher',
             'id_schedule'      => 'nullable|exists:schedules,id_schedule',
             'semester'         => 'required|string|max:10',
             'enrollment_date'  => 'required|date',

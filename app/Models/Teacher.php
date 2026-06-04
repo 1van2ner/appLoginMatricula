@@ -10,15 +10,12 @@ class Teacher extends Model
     use HasFactory;
 
     protected $table = 'teachers';
-    protected $primaryKey = 'id_profesor'; // Indicamos la llave primaria propia
+    protected $primaryKey = 'id_teacher'; // Indicamos la llave primaria propia
+    public $timestamps = false;
 
     protected $fillable = [
-        'dni',
-        'nombre',
-        'apellidos',
-        'email',
-        'telefono',
-        'especialidad',
-        'estado'
+        'first_name',
+        'last_name',
+        'specialty',
     ];
 }

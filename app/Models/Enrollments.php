@@ -15,16 +15,16 @@ class Enrollments extends Model
     use HasFactory;
 
     // 1. Nombre real de la tabla en la base de datos (Inglés y plural)
-protected $table = 'enrollments';
+    protected $table = 'enrollments';
     protected $primaryKey = 'id_enrollment';
     public $timestamps = false;
 
     
     protected $fillable = [
-        'student_id',
-        'course_id',
-        'teacher_id',
-        'schedule_id',
+        'id_alumno',
+        'id_course',
+        'id_teacher',
+        'id_schedule',
         'semester',
         'enrollment_date',
         'final_grade',
@@ -58,7 +58,7 @@ protected $table = 'enrollments';
      */
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'id_teacher', 'id_profesor');
+        return $this->belongsTo(Teacher::class, 'id_teacher', 'id_teacher');
     }
 
     /**

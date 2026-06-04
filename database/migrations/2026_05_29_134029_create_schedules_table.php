@@ -21,9 +21,9 @@ return new class extends Migration
                 ->constrained('courses', 'id_course')
                 ->onDelete('cascade');
 
-            $table->dateTime('weekday');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->string('weekday', 10);
+            $table->time('start_time');
+            $table->time('end_time');
             $table->string('num_salon', 10); // Límite de caracteres para el salón
             $table->timestamps();
         });

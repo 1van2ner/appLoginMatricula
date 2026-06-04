@@ -22,9 +22,9 @@ class StoreTeachersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre'       => 'required|string|max:255',
-            'apellidos'    => 'required|string|max:255',
-            'especialidad' => 'required|string|max:255',
+            'first_name'       => 'required|string|max:255',
+            'last_name'        => 'required|string|max:255',
+            'specialty'       => 'required|string|max:255',
         ];
     }
 }

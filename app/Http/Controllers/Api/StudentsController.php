@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Student; // Asegúrate de tener tu modelo creado
+use App\Models\Students; // Asegúrate de tener tu modelo creado
 
 class StudentsController extends Controller
 {
@@ -14,7 +14,7 @@ class StudentsController extends Controller
     public function index()
     {
         // Traemos todos los alumnos de la base de datos
-        $students = Student::all();
+        $students = Students::all();
         return response()->json($students, 200);
     }
 
@@ -36,7 +36,7 @@ class StudentsController extends Controller
         ]);
 
         // Creamos el registro en la base de datos
-        $student = Student::create($validatedData);
+        $student = Students::create($validatedData);
 
         return response()->json([
             'message' => 'Alumno registrado con éxito',
@@ -50,7 +50,7 @@ class StudentsController extends Controller
     public function show(string $id)
     {
         // Laravel buscará usando la clave primaria de tu modelo
-        $student = Student::find($id);
+        $student = Students::find($id);
 
         if (!$student) {
             return response()->json(['message' => 'Alumno no encontrado'], 404);
@@ -64,7 +64,7 @@ class StudentsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $student = Student::find($id);
+        $student = Students::find($id);
 
         if (!$student) {
             return response()->json(['message' => 'Alumno no encontrado'], 404);
@@ -95,7 +95,7 @@ class StudentsController extends Controller
      */
     public function destroy(string $id)
     {
-        $student = Student::find($id);
+        $student = Students::find($id);
 
         if (!$student) {
             return response()->json(['message' => 'Alumno no encontrado'], 404);

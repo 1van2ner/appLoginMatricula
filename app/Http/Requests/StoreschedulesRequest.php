@@ -12,7 +12,7 @@ class StoreschedulesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,10 +23,11 @@ class StoreschedulesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'weekday'    =>'required|date',
-            'start_time'   =>'required|date',
-            'end_time'      =>'required|date',
-            'num_salon'     =>'numeric',
+            'id_course'     =>'required|integer',
+            'weekday'       =>'required|string|max:225',
+            'start_time'    =>'required|date_format:H:i',
+            'end_time'      =>'required|date_format:H:i',
+            'num_salon'     =>'required|numeric',
         ];
     }
 }
