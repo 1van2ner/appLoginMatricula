@@ -12,7 +12,7 @@ class UpdateTeachersRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,9 @@ class UpdateTeachersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre'       => 'required|string|max:255',
+            'apellidos'    => 'required|string|max:255',
+            'especialidad' => 'required|string|max:255',
         ];
     }
 }
