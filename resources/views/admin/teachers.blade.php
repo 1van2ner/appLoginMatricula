@@ -8,6 +8,21 @@
             {{ session('status') }}
         </div>
     @endif
+    @if(session('error'))
+        <div class="p-4 bg-rose-100 text-rose-800 rounded-xl font-bold">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="p-4 bg-amber-100 text-amber-800 rounded-xl">
+            <ul class="list-disc pl-5 text-sm">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         
@@ -25,22 +40,18 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-100 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
-                        <th class="p-4">DNI</th>
+                        <th class="p-4">ID</th>
                         <th class="p-4">Nombre Completo</th>
                         <th class="p-4">Especialidad</th>
-                        <th class="p-4">Correo</th>
-                        <th class="p-4">Teléfono</th>
                         <th class="p-4 text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="text-sm text-slate-700">
                     @forelse($teachers as $teacher)
                         <tr class="border-b border-slate-100 hover:bg-slate-50">
-                            <td class="p-4 font-mono text-xs">{{ $teacher->dni }}</td>
+                            <td class="p-4 font-mono text-xs">{{ $teacher->id_profesor }}</td>
                             <td class="p-4 font-semibold">{{ $teacher->nombre }} {{ $teacher->apellidos }}</td>
                             <td class="p-4">{{ $teacher->especialidad ?? 'General' }}</td>
-                            <td class="p-4 text-slate-500">{{ $teacher->email }}</td>
-                            <td class="p-4 text-slate-500">{{ $teacher->telefono ?? '—' }}</td>
                             <td class="p-4 text-center">
                                 <div class="flex justify-center gap-2">
                                     <button type="button" 
@@ -48,9 +59,6 @@
                                         data-id="{{ $teacher->id_profesor }}"
                                         data-nombre="{{ $teacher->nombre }}"
                                         data-apellidos="{{ $teacher->apellidos }}"
-                                        data-dni="{{ $teacher->dni }}"
-                                        data-email="{{ $teacher->email }}"
-                                        data-telefono="{{ $teacher->telefono }}"
                                         data-especialidad="{{ $teacher->especialidad }}">
                                         Editar
                                     </button>
@@ -96,23 +104,9 @@
                     <input type="text" name="apellidos" required class="w-full px-3 py-2 border rounded-lg text-sm">
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1">DNI</label>
-                    <input type="text" name="dni" required maxlength="8" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1">Especialidad</label>
-                    <input type="text" name="especialidad" class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-            </div>
             <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Correo Electrónico</label>
-                <input type="email" name="email" required class="w-full px-3 py-2 border rounded-lg text-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Teléfono</label>
-                <input type="text" name="telefono" class="w-full px-3 py-2 border rounded-lg text-sm">
+                <label class="block text-xs font-bold text-slate-500 mb-1">Especialidad</label>
+                <input type="text" name="especialidad" class="w-full px-3 py-2 border rounded-lg text-sm">
             </div>
             <div class="pt-4 border-t flex justify-end gap-2">
                 <button type="button" id="btnCancelarModal" class="px-4 py-2 text-xs bg-slate-100 rounded-lg font-bold text-slate-600">Cancelar</button>

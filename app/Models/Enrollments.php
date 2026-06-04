@@ -21,10 +21,10 @@ protected $table = 'enrollments';
 
     
     protected $fillable = [
-        'student_id',
-        'course_id',
-        'teacher_id',
-        'schedule_id',
+        'id_alumno',
+        'id_course',
+        'id_teacher',
+        'id_schedule',
         'semester',
         'enrollment_date',
         'final_grade',

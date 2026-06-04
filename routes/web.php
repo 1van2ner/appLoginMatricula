@@ -54,6 +54,9 @@ Route::middleware(['auth'])->group(function () {
 
     // MÓDULO DE HORARIOS
     Route::get('/admin/schedules', [SchedulesWebController::class, 'index'])->name('schedules.index');
+    Route::post('/admin/schedules', [SchedulesWebController::class, 'store'])->name('schedules.store');
+    Route::put('/admin/schedules/{id}', [SchedulesWebController::class, 'update'])->name('schedules.update');
+    Route::delete('/admin/schedules/{id}', [SchedulesWebController::class, 'destroy'])->name('schedules.destroy');
 
     // MÓDULO DE PROFESORES
     Route::get('/admin/teachers', [TeachersWebController::class, 'index'])->name('teachers.index');

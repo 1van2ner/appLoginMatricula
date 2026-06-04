@@ -11,14 +11,10 @@ class Teacher extends Model
 
     protected $table = 'teachers';
     protected $primaryKey = 'id_profesor'; // Indicamos la llave primaria propia
-
+    // Solo los atributos necesarios: nombre, apellidos, especialidad
     protected $fillable = [
-        'dni',
         'nombre',
         'apellidos',
-        'email',
-        'telefono',
         'especialidad',
-        'estado'
     ];
 }

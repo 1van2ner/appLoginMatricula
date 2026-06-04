@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateschedulesRequest extends FormRequest
@@ -12,21 +11,22 @@ class UpdateschedulesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'weekday'    =>'required|date',
-            'start_time'   =>'required|date',
-            'end_time'      =>'required|date',
-            'num_salon'     =>'numeric',
+            'id_course'  => 'required|integer|exists:courses,id_course',
+            'weekday'    => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time'   => 'required|date_format:H:i|after:start_time',
+            'num_salon'  => 'required|string|max:20',
         ];
     }
 }

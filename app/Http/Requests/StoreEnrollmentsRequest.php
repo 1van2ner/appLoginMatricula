@@ -39,10 +39,10 @@ class StoreEnrollmentsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'student_id.required'  => 'El alumno es obligatorio.',
-            'student_id.exists'    => 'El alumno seleccionado no existe en el sistema.',
-            'course_id.required'   => 'El curso es obligatorio.',
-            'course_id.exists'     => 'El curso seleccionado no existe.',
+            'id_alumno.required'   => 'El alumno es obligatorio.',
+            'id_alumno.exists'     => 'El alumno seleccionado no existe en el sistema.',
+            'id_course.required'   => 'El curso es obligatorio.',
+            'id_course.exists'     => 'El curso seleccionado no existe.',
             'status.required'      => 'El estado es obligatorio.',
             'status.in'            => 'El estado debe ser: aprobado, reprobado o cursando.',
             'final_grade.between'  => 'La nota final debe estar en el rango de 0 a 20.',

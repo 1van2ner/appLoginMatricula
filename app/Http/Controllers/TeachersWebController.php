@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
-
 class TeachersWebController extends Controller
 {
     public function index()
     {
-        // Traemos todos los profesores ordenados por su ID descendente
         $teachers = Teacher::orderBy('id_profesor', 'desc')->get();
         return view('admin.teachers', compact('teachers'));
     }
@@ -19,14 +17,20 @@ class TeachersWebController extends Controller
         $validatedData = $request->validate([
             'nombre'       => 'required|string|max:100',
             'apellidos'    => 'required|string|max:100',
-            'dni'          => 'required|string|max:8|unique:teachers,dni',
-            'email'        => 'required|email|max:150|unique:teachers,email',
-            'telefono'     => 'nullable|string|max:20',
             'especialidad' => 'nullable|string|max:100',
-            'estado'       => 'required|in:activo,inactivo'
         ]);
 
-        Teacher::create($validatedData);
+        try {
+            // Create only allowed attributes
+            Teacher::create([
+                'nombre' => $validatedData['nombre'],
+                'apellidos' => $validatedData['apellidos'],
+                'especialidad' => $validatedData['especialidad'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error al crear profesor: ' . $e->getMessage(), ['data' => $validatedData]);
+            return redirect()->back()->withInput()->with('error', 'No se pudo guardar el profesor. Revisa el log.');
+        }
 
         return redirect()->route('teachers.index')->with('status', '¡Profesor registrado exitosamente!');
     }
@@ -38,14 +42,19 @@ class TeachersWebController extends Controller
         $validatedData = $request->validate([
             'nombre'       => 'required|string|max:100',
             'apellidos'    => 'required|string|max:100',
-            'dni'          => 'required|string|max:8|unique:teachers,dni,' . $id . ',id_profesor',
-            'email'        => 'required|email|max:150|unique:teachers,email,' . $id . ',id_profesor',
-            'telefono'     => 'nullable|string|max:20',
             'especialidad' => 'nullable|string|max:100',
-            'estado'       => 'required|in:activo,inactivo'
         ]);
 
-        $teacher->update($validatedData);
+        try {
+            $teacher->update([
+                'nombre' => $validatedData['nombre'],
+                'apellidos' => $validatedData['apellidos'],
+                'especialidad' => $validatedData['especialidad'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error al actualizar profesor: ' . $e->getMessage(), ['id' => $id, 'data' => $validatedData]);
+            return redirect()->back()->withInput()->with('error', 'No se pudo actualizar el profesor. Revisa el log.');
+        }
 
         return redirect()->route('teachers.index')->with('status', '¡Datos del profesor actualizados correctamente!');
     }

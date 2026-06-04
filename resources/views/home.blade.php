@@ -45,6 +45,15 @@
                 Ir al registro &rarr;
             </a>
         </div>
+
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+            <div class="text-2xl mb-2">🕒</div>
+            <h4 class="font-bold text-gray-900 text-base">Configuración de Horarios</h4>
+            <p class="text-xs text-gray-500 mt-1 mb-4">Define días, bloques y salones para los cursos del semestre.</p>
+            <a href="{{ url('/admin/schedules') }}" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                Ir al módulo &rarr;
+            </a>
+        </div>
     </div>
 </div>
 @endsection
