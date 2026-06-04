@@ -3,29 +3,20 @@
 @section('content')
 <div class="p-6 space-y-6">
 
+    {{-- Notificaciones --}}
     @if(session('status'))
-        <div class="p-4 bg-emerald-100 text-emerald-800 rounded-xl font-bold">
-            {{ session('status') }}
-        </div>
+        <div class="p-4 bg-emerald-100 text-emerald-800 rounded-xl font-bold">{{ session('status') }}</div>
     @endif
     @if(session('error'))
-        <div class="p-4 bg-rose-100 text-rose-800 rounded-xl font-bold">
-            {{ session('error') }}
-        </div>
+        <div class="p-4 bg-rose-100 text-rose-800 rounded-xl font-bold">{{ session('error') }}</div>
     @endif
-
     @if($errors->any())
         <div class="p-4 bg-amber-100 text-amber-800 rounded-xl">
-            <ul class="list-disc pl-5 text-sm">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <ul class="list-disc pl-5 text-sm"> @foreach($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
         </div>
     @endif
 
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        
         <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
             <div>
                 <h3 class="text-lg font-bold text-slate-800">👨‍🏫 Profesores Registrados</h3>
@@ -54,7 +45,8 @@
                             <td class="p-4">{{ $teacher->especialidad ?? 'General' }}</td>
                             <td class="p-4 text-center">
                                 <div class="flex justify-center gap-2">
-                                    <button type="button" 
+                                    {{-- Botón Editar --}}
+                                    <button type="button"
                                         class="btn-editar text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-lg border border-blue-200 font-bold"
                                         data-id="{{ $teacher->id_profesor }}"
                                         data-nombre="{{ $teacher->nombre }}"
@@ -63,6 +55,7 @@
                                         Editar
                                     </button>
 
+                                    {{-- Botón Eliminar --}}
                                     <form action="{{ route('teachers.destroy', $teacher->id_profesor) }}" method="POST" onsubmit="return confirm('¿Eliminar profesor?');" class="inline">
                                         @csrf
                                         @method('DELETE')
@@ -75,8 +68,8 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="p-12 text-center text-slate-400">
-                                <p class="text-sm font-bold">No hay profesores registrados en la base de datos.</p>
+                            <td colspan="4" class="p-12 text-center text-slate-400">
+                                <p class="text-sm font-bold">No hay profesores registrados.</p>
                             </td>
                         </tr>
                     @endforelse
@@ -86,46 +79,60 @@
     </div>
 </div>
 
+{{-- MODAL REGISTRO --}}
 <div id="modalRegistro" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 w-full max-w-lg overflow-hidden">
-        <div class="p-4 border-b bg-slate-50 flex justify-between items-center">
-            <h4 class="font-bold text-slate-800">Registrar Nuevo Docente</h4>
-            <button id="btnCerrarModal" class="text-slate-400 text-xl font-bold">&times;</button>
-        </div>
-        <form action="{{ route('teachers.store') }}" method="POST" class="p-6 space-y-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6">
+        <h4 class="font-bold text-slate-800 mb-4">Registrar Nuevo Docente</h4>
+        <form action="{{ route('teachers.store') }}" method="POST" class="space-y-4">
             @csrf
             <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1">Nombres</label>
-                    <input type="text" name="nombre" required class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1">Apellidos</label>
-                    <input type="text" name="apellidos" required class="w-full px-3 py-2 border rounded-lg text-sm">
-                </div>
+                <input type="text" name="nombre" placeholder="Nombre" required class="w-full px-3 py-2 border rounded-lg text-sm">
+                <input type="text" name="apellidos" placeholder="Apellidos" required class="w-full px-3 py-2 border rounded-lg text-sm">
             </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-500 mb-1">Especialidad</label>
-                <input type="text" name="especialidad" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <input type="text" name="especialidad" placeholder="Especialidad" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('modalRegistro').classList.add('hidden')" class="px-4 py-2 bg-slate-100 rounded-lg text-xs font-bold">Cancelar</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Guardar</button>
             </div>
-            <div class="pt-4 border-t flex justify-end gap-2">
-                <button type="button" id="btnCancelarModal" class="px-4 py-2 text-xs bg-slate-100 rounded-lg font-bold text-slate-600">Cancelar</button>
-                <button type="submit" class="px-4 py-2 text-xs bg-blue-600 text-white rounded-lg font-bold shadow-md">Guardar</button>
+        </form>
+    </div>
+</div>
+
+{{-- MODAL EDICIÓN --}}
+<div id="modalEditar" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6">
+        <h4 class="font-bold text-slate-800 mb-4">Editar Profesor</h4>
+        <form id="formEditar" action="" method="POST" class="space-y-4">
+            @csrf
+            @method('PUT')
+            <div class="grid grid-cols-2 gap-4">
+                <input type="text" name="nombre" id="edit_nombre" required class="w-full px-3 py-2 border rounded-lg text-sm">
+                <input type="text" name="apellidos" id="edit_apellidos" required class="w-full px-3 py-2 border rounded-lg text-sm">
+            </div>
+            <input type="text" name="especialidad" id="edit_especialidad" class="w-full px-3 py-2 border rounded-lg text-sm">
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('modalEditar').classList.add('hidden')" class="px-4 py-2 bg-slate-100 rounded-lg text-xs font-bold">Cancelar</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Actualizar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    const modal = document.getElementById('modalRegistro');
-    const btnAbrir = document.getElementById('btnAbrirModal');
-    const btnCerrar = document.getElementById('btnCerrarModal');
-    const btnCancelar = document.getElementById('btnCancelarModal');
+    // Lógica para Abrir Modal Registro
+    document.getElementById('btnAbrirModal').addEventListener('click', () => {
+        document.getElementById('modalRegistro').classList.remove('hidden');
+    });
 
-    btnAbrir.addEventListener('click', () => modal.classList.remove('hidden'));
-    
-    const ocultarModal = () => modal.classList.add('hidden');
-    btnCerrar.addEventListener('click', ocultarModal);
-    btnCancelar.addEventListener('click', ocultarModal);
+    // Lógica para Abrir Modal Edición y cargar datos
+    document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('edit_nombre').value = btn.dataset.nombre;
+            document.getElementById('edit_apellidos').value = btn.dataset.apellidos;
+            document.getElementById('edit_especialidad').value = btn.dataset.especialidad;
+            document.getElementById('formEditar').action = `/teachers/${btn.dataset.id}`;
+            document.getElementById('modalEditar').classList.remove('hidden');
+        });
+    });
 </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\log;
 class TeachersWebController extends Controller
 {
     public function index()
@@ -28,7 +29,7 @@ class TeachersWebController extends Controller
                 'especialidad' => $validatedData['especialidad'] ?? null,
             ]);
         } catch (\Exception $e) {
-            \Log::error('Error al crear profesor: ' . $e->getMessage(), ['data' => $validatedData]);
+            Log::error('Error al crear profesor: ' . $e->getMessage(), ['data' => $validatedData]);
             return redirect()->back()->withInput()->with('error', 'No se pudo guardar el profesor. Revisa el log.');
         }
 
@@ -52,7 +53,7 @@ class TeachersWebController extends Controller
                 'especialidad' => $validatedData['especialidad'] ?? null,
             ]);
         } catch (\Exception $e) {
-            \Log::error('Error al actualizar profesor: ' . $e->getMessage(), ['id' => $id, 'data' => $validatedData]);
+            Log::error('Error al actualizar profesor: ' . $e->getMessage(), ['id' => $id, 'data' => $validatedData]);
             return redirect()->back()->withInput()->with('error', 'No se pudo actualizar el profesor. Revisa el log.');
         }
 
